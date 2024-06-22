@@ -3,7 +3,21 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class ChromeDinosaur extends JPanel implements ActionListener, KeyListener {
+public class ChromeDinosaur extends JPanel implements ActionListener, KeyListener 
+	//ChromeDinosaur extends JPanel to create a custom panel for the game.
+	// Implements ActionListener and KeyListener to handle game actions and keyboard input.
+	//--------------------------------------------------
+
+	// Instance Varoabel
+	/**
+	 Define game board dimensions.
+	Load and store images for the dinosaur and cacti.
+	Define properties for the dinosaur and cacti.
+	Initialize physics-related variables such as velocity and gravity.
+	Boolean flag for game over and score tracking.
+	Two timers: one for the game loop and one for placing cacti.
+ **/
+{	
     int boardWidth = 750;
     int boardHeight = 250;
 
@@ -15,7 +29,10 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     Image cactus2Img;
     Image cactus3Img;
 
-    class Block {
+    class Block 
+    //Represents a block in the game (either the dinosaur or a cactus).
+    //Stores the block's position, dimensions, and image.
+    {
         int x;
         int y;
         int width;
@@ -60,7 +77,14 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     Timer gameLoop;
     Timer placeCactusTimer;
 
-    public ChromeDinosaur() {
+    public ChromeDinosaur() 	//---->  Constructor
+    /**
+     Set the size, background color, and focusable property for the panel.
+	Load images for the dinosaur and cacti.
+	Initialize the dinosaur and cactus array.
+	Start timers for the game loop and cactus placement.
+     **/
+    {
     	
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         setBackground(Color.lightGray);
@@ -94,7 +118,12 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
         placeCactusTimer.start();
     }
 
-    void placeCactus() {
+    void placeCactus()	//		--> Cactus placement method 
+    /**
+     Randomly place a cactus based on predefined probabilities.
+	 Ensure no more than 10 cacti are on the screen at once.
+     **/
+    {
         if (gameOver) {
             return;
         }
@@ -118,7 +147,12 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
         }
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g)  //-->paint componant method
+    /*
+     Override paintComponent to draw the game elements.
+	Draw the dinosaur, cacti, and score on the panel.
+     */
+    {
         super.paintComponent(g);
         draw(g);
     }
@@ -144,7 +178,13 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
         }
     }
 
-    public void move() {
+    public void move() // --> move and collisoin method
+    /*
+     Implement the movement of the dinosaur and cacti.
+	 Check for collisions between the dinosaur and cacti.
+	 Update the game state and score.
+     */
+    {
         //dinosaur
         velocityY += gravity;
         dinosaur.y += velocityY;
@@ -179,7 +219,8 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
 
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)	//Moves the game elements and repaints the panel. Stops timers if the game is over.
+    {
         move();
         repaint();
         if (gameOver) {
@@ -189,7 +230,8 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e)	//Handles the space key for jumping and restarting the game.
+    {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             // System.out.println("JUMP!");
             if (dinosaur.y == dinosaurY) {
@@ -212,8 +254,10 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e)	//Required methods for KeyListener but not used in this game.	
+    {}
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) // Resets the game state to start a new game.
+    {}
 }
